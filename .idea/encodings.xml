@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Model1_NSGA2/popSize[200]_maxGen[1000]_pm[0.3]_pc[0.7]_GSRate[0.3]_LSRate[0.4]/结果_Log.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Model1_NSGA2/popSize[50]_maxGen[100]_pm[0.3]_pc[0.7]_GSRate[0.3]_LSRate[0.4]/结果_Log.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Model1_NSGA2/popSize[50]_maxGen[50]_pm[0.3]_pc[0.7]_GSRate[0.3]_LSRate[0.4]/结果_Log.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/data/machineSupport.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/data/machineTime.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/data/machineTime20240207.csv" charset="GBK" />
+  </component>
+</project>
