@@ -111,11 +111,10 @@ class MyProblem(ea.Problem):
 
         self.mExecQueue = self.initMeachineExecQueue(self.allMeachineName)
 
-
-        self.workEnergyUnit = {'M1':{'工序0': 50}, 'M2':{'工序0':43},'M3':{'工序0':53},
-                               'M4':{'工序1': 25}, 'M5':{'工序1':22},'M6':{'工序1':18},
-                               'M7':{'工序2': 15}, 'M8':{'工序2':17},
-                               'M9':{'工序3':7.5}, 'M10':{'工序3':6}}
+        self.workEnergyUnit = {'M1':{'工序0': 1}, 'M2':{'工序0':0.9},'M3':{'工序0':0.9},
+                               'M4':{'工序1': 1}, 'M5':{'工序1':1},'M6':{'工序1':1},
+                               'M7':{'工序2': 1}, 'M8':{'工序2':1},
+                               'M9':{'工序3':1}, 'M10':{'工序3':1}}
 
         J = {}
         jobIdx = 0  
@@ -214,22 +213,11 @@ class MyProblem(ea.Problem):
                     kJobIdx = kTask[0]  
                     kSubJobIdx = kTask[1]  
                     kTask_time = imExecQueue['起始时刻'][k]
-
                     workTime[kSubJobIdx, j] += kTask_time[1] - kTask_time[0]
-
                     workCost += (kTask_time[1] - kTask_time[0]) * self.workEnergyUnit[jMachineName]['工序%d'%kSubJobIdx]
-                    jMachineWorkTime += (kTask_time[1] - kTask_time[0])
 
-                standbyCost = (finishTime - jMachineWorkTime) * (self.workEnergyUnit[jMachineName]['工序%d'%kSubJobIdx]/3)
-
-            totalStandByTime = totalCostTime - sum(sum(workTime))  
-            f1 += workCost + standbyCost
-
-            for i in range(len(workTime)):
-                iSubJob_workTime = workTime[i]
-                iSubJob_workTime = iSubJob_workTime[iSubJob_workTime>0]
-                avergeWorkTime = np.average(iSubJob_workTime)
-                f2 += sum(abs(iSubJob_workTime - avergeWorkTime))
+            f1 += workCost
+            f2 = np.array(workTime).max(axis=0).max()
 
             F1.append([f1])
             F2.append([f2])

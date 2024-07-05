@@ -152,7 +152,7 @@ def GA(popSize=50, maxGen=200, pm=0.3, pc=0.7, GSRate=0.6, LSRate=0.2):
         f.write('-' * 30 + ' Nondominated Solution[%d] ' % (j + 1) + '-' * 30 + '\n')
         f.write('F1[%f] F2[%f]\n' % (f1, f2))
         f.write('Decision Variable: %s\n' % list(res['Vars'][j]))
-        f.write('加工功耗：%s  待机功耗：%s\n' % (workCost, standbyCost))
+        f.write('优先级：%s  请忽略：%s\n' % (workCost, standbyCost))
 
         fileName = rootPath + '/非支配解/帕累托[%d]_甘特图.png' % (j + 1)
         allMeachineName = problem.allMeachineName
@@ -167,4 +167,4 @@ def GA(popSize=50, maxGen=200, pm=0.3, pc=0.7, GSRate=0.6, LSRate=0.2):
 
 
 if __name__ == '__main__':
-    GA(popSize=50, maxGen=50, pm=0.3, pc=0.7, GSRate=0.3, LSRate=0.4)
+    GA(popSize=50, maxGen=500, pm=0.3, pc=0.7, GSRate=0.3, LSRate=0.4)
