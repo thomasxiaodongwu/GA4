@@ -6,7 +6,6 @@ import re
 import copy
 from Model1_NSGA2.EncodeInitPop import Encode
 
-
 def decodeData(machineSupport, machineTime):
     machineInfo = {}
     jobInfo = {}
@@ -41,14 +40,7 @@ def decodeData(machineSupport, machineTime):
 
 
 def getsOSIdx_2_SubJobIdx_JobIdx(job_subJobInfo):
-    '''
-    得到 OS序号 到 工件的映射关系
-    例如：job_subJobInfo = {'job0':[工序0， 工序1], 'job1':[工序0， 工序1， 工序2]}
-    OSIdx_2_JobIdx_Map = {0: 0, 1:0, 2:1, 3:1, 4:1}       
-    OSIdx_2_subJobIdx_Map = {0: 0, 1:1, 2:0, 3:1, 4:2}    
-    :param job_subJobInfo:
-    :return:
-    '''
+
     OSIdx = 0  
     jobIdx = -1
     OSIdx_2_JobIdx_Map = {}
@@ -63,15 +55,7 @@ def getsOSIdx_2_SubJobIdx_JobIdx(job_subJobInfo):
 
 
 def getsIdx_2_SubJobIdx_JobIdx(job_subJobInfo):
-    '''
-    得到 第二层机器码的索引 到 工件号、工序号的映射关系
 
-    例如：job_subJobInfo = {'job0':[工序0， 工序1], 'job1':[工序0， 工序1， 工序2]}
-    OSIdx_2_JobIdx_Map = {0: 0, 1:0, 2:1, 3:1, 4:1}       
-    OSIdx_2_subJobIdx_Map = {0: 0, 1:1, 2:0, 3:1, 4:2}    
-    :param job_subJobInfo:
-    :return:
-    '''
     idx = 0  
     jobIdx = -1
     Idx_2_JobIdx_subJobIdx_Map = {}
@@ -90,12 +74,7 @@ class MyProblem(ea.Problem):
         self.machineTime = pd.read_csv('../data/machineTime.csv', encoding='gbk', index_col=0)
         assert self.machineSupport.index.min() == 0, '要求工件的序号从0开始！'
         assert '0' in self.machineSupport.columns.min(), '要求工序的序号从0开始！'
-        '''
-        数据要求：
-        1、工序编号从0开始，如工序0、工序1
-        2、工件编号从0开始，如工件0、工件1
-        3、机器编号从1开始，如M1、M2
-        '''
+
         self.machineInfo, jobInfo = decodeData(self.machineSupport, self.machineTime)
         self.numJob = len(self.machineSupport)  
         self.numMachine = jobInfo['所有机器的总数量']
@@ -225,10 +204,7 @@ class MyProblem(ea.Problem):
         return np.array(F1), np.array(F2), allmExecQueue, allOptDetail
 
     def decode(self, vars):
-        '''
-        :param vars:
-        :return:
-        '''
+
         allmExecQueue = []
         for item in vars:
             mExecQueue = copy.deepcopy(self.mExecQueue)
@@ -282,25 +258,13 @@ class MyProblem(ea.Problem):
         return allmExecQueue
 
     def isQueueAllExecuted(self, iMachineState):
-        '''
-        mQueue 全部都执行完时，返回True
-        :param mQueue:
-        :return:
-        '''
+
         if self.numSubJob == sum(iMachineState) + len(iMachineState):
             return True
         else:
             return False
 
     def checkWeatherTaskCanExecute(self, iMachineName, iTask, istate, mExecQueue):
-        '''
-        查看 iTask 是否可以执行。可以执行：返回true；不可以执行：返回false
-        :param iMachineName: 机器名字
-        :param iTask: 任务，例如：(3,1)，表示工件3  工序1
-        :param istate:每个工件的状态，即正在加工哪道工序
-        :param mExecQueue:所有机器的执行列表，最后一个表示正在执行的任务
-        :return:
-        '''
 
         iJobIdx = iTask[0]  
         iSubJobIdx = iTask[1]  
