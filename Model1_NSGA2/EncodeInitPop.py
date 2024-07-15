@@ -42,11 +42,8 @@ class Encode:
             for jobi in jobList:  
                 timei = self.Matrix['job%d'%jobi] 
                 for i in range(len(timei)):  
-                    candMachineOperation = timei['工序%d'%i]['可选机器耗时']  
-                    candMachine = timei['工序%d'%i]['可选机器']  
-                    '''
-                    例如，机器0 不能加工  工件1 的工序0 ，则将其加工耗时设为正无穷
-                    '''
+                    candMachineOperation = timei['machines%d'%i]['可选机器耗时']  
+                    candMachine = timei['machines%d'%i]['可选机器']
                     operationTime = np.ones(self.machineNum, dtype=int) * np.inf
                     for idx, M in enumerate(candMachine):
                         MIdx = int(M[1:]) - 1   
@@ -75,8 +72,8 @@ class Encode:
                 machineTimearr = np.zeros(self.machineNum, dtype=int)
                 timei = self.Matrix['job%d'%jobi] 
                 for i in range(len(timei)):  
-                    candMachineOperation = timei['工序%d'%i]['可选机器耗时']  
-                    candMachine = timei['工序%d'%i]['可选机器']
+                    candMachineOperation = timei['machines%d'%i]['可选机器耗时']  
+                    candMachine = timei['machines%d'%i]['可选机器']
                     operationTime = np.ones(self.machineNum, dtype=int) * np.inf
                     for idx, M in enumerate(candMachine):
                         MIdx = int(M[1:]) - 1   
@@ -106,8 +103,8 @@ class Encode:
                 timei = self.Matrix['job%d'%jobi] 
                 for i in range(len(timei)):
                     machinePosition = []
-                    candMachineOperation = timei['工序%d'%i]['可选机器耗时']  
-                    candMachine = timei['工序%d'%i]['可选机器']  
+                    candMachineOperation = timei['machines%d'%i]['可选机器耗时']  
+                    candMachine = timei['machines%d'%i]['可选机器']  
                     for idx, M in enumerate(candMachine):
                         MIdx = int(M[1:]) - 1   
                         machinePosition.append(MIdx)

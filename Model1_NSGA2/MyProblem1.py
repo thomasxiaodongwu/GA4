@@ -90,10 +90,14 @@ class MyProblem(ea.Problem):
 
         self.mExecQueue = self.initMeachineExecQueue(self.allMeachineName)
 
-        self.workEnergyUnit = {'M1':{'工序0': 1}, 'M2':{'工序0':0.9},'M3':{'工序0':0.9},
-                               'M4':{'工序1': 1}, 'M5':{'工序1':1},'M6':{'工序1':1},
-                               'M7':{'工序2': 1}, 'M8':{'工序2':1},
-                               'M9':{'工序3':1}, 'M10':{'工序3':1}}
+        self.workEnergyUnit = {'M1':{'machines0': 1}, 'M2':{'machines0':1},'M3':{'machines0':1},
+                               'M4':{'machines0': 1}, 'M5':{'machines0':1},'M6':{'machines0':1},
+                               'M7':{'machines0': 1}, 'M8':{'machines0':1},
+                               'M9':{'machines0':1}, 'M10':{'machines0':1}}
+        self.workEnergyMaintain = {'M1':'60,70;', 'M2':'60,70;', 'M3':'60,70;',
+                               'M4':'60,70;', 'M5':'60,70;', 'M6':'60,70;',
+                               'M7':'60,70;', 'M8':'60,70;',
+                               'M9':'60,70;', 'M10':'60,70;'}
 
         J = {}
         jobIdx = 0  
@@ -161,7 +165,7 @@ class MyProblem(ea.Problem):
 
                         nextTask_start = imExecQueue['时间轴']  
 
-                        nextJobInfo = machineInfo['job%d' % (nextJobIdx)]['工序%d' % (nextSubJobIdx)]
+                        nextJobInfo = machineInfo['job%d' % (nextJobIdx)]['machines%d' % (nextSubJobIdx)]
                         machindIdx = np.where(np.array(nextJobInfo['可选机器']) == jMachineName)[0][0]
                         costTime = nextJobInfo['可选机器耗时'][machindIdx]
 
@@ -193,7 +197,7 @@ class MyProblem(ea.Problem):
                     kSubJobIdx = kTask[1]  
                     kTask_time = imExecQueue['起始时刻'][k]
                     workTime[kSubJobIdx, j] += kTask_time[1] - kTask_time[0]
-                    workCost += (kTask_time[1] - kTask_time[0]) * self.workEnergyUnit[jMachineName]['工序%d'%kSubJobIdx]
+                    workCost += (kTask_time[1] - kTask_time[0]) * self.workEnergyUnit[jMachineName]['machines%d'%kSubJobIdx]
 
             f1 += workCost
             f2 = np.array(workTime).max(axis=0).max()
@@ -222,7 +226,7 @@ class MyProblem(ea.Problem):
 
                 iJobName = 'job%d' % (iJobIdx)
 
-                iSubJobName = '工序%d' % (iSubJobIdx)
+                iSubJobName = 'machines%d' % (iSubJobIdx)
 
                 candMachine = self.machineInfo[iJobName][iSubJobName]['可选机器']
 
@@ -239,7 +243,7 @@ class MyProblem(ea.Problem):
                 iJobName = 'job%d' % (iJobIdx)
 
                 iSubJobIdx = self.OSIdx_2_subJobIdx_Map[OSidx]
-                iSubJobName = '工序%d' % (iSubJobIdx)
+                iSubJobName = 'machines%d' % (iSubJobIdx)
 
                 if iSubJobIdx != (istate[iJobIdx] + 1):
                     layer1[i] = OSidx - (iSubJobIdx - (istate[iJobIdx] + 1))
